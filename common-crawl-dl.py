@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import re
 import pprint
@@ -7,7 +7,8 @@ import os
 from pathlib import Path
 from FileDownloader import FileDownloader
 
-url_prefix = 'https://commoncrawl.s3.amazonaws.com/'
+#url_prefix = 'https://commoncrawl.s3.amazonaws.com/'
+url_prefix = 'https://data.commoncrawl.org/'
 DL_FOLDER = 'Downloads/'
 tlds = ['lu','fr','dk']
 IDX_URL = 0
@@ -56,12 +57,13 @@ for i in indexes:
 				fname = os.path.basename(fullpath)
 				cdxFiles[i][fname] = fullpath
 	if found == 0:
-		print(f'ERROR: {f} cluster.idx not found')
+		print(f'ERROR: cluster.idx not found')
 dl.wait_all_finished()
 
 # check the cluster.idx files to see which CDX files we need to download for each TLD
 for crawl in indexes:
 	with open(DL_FOLDER + indexes[crawl][IDX_LOCALCLUSTER_NAME]) as f:
+		print(crawl, DL_FOLDER + indexes[crawl][IDX_LOCALCLUSTER_NAME])
 		tld_cdx_list = {}
 		for tld in tlds:
 			tld_cdx_list[tld] = {}
